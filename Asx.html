@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>คิดถึงทุกคนนะ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --b50:  #E6F1FB;
+      --b100: #B5D4F4;
+      --b200: #85B7EB;
+      --b400: #378ADD;
+      --b600: #185FA5;
+      --b800: #0C447C;
+      --b900: #042C53;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: #fff;
+      color: var(--b900);
+      overflow-x: hidden;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--b900);
+      position: relative;
+      overflow: hidden;
+      padding: 5.5rem 2rem 5rem;
+      text-align: center;
+    }
+
+    /* stars */
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(181,212,244,0.85);
+      animation: twinkle linear infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(0.7); }
+      50%       { opacity: 1;    transform: scale(1.3); }
+    }
+
+    /* floating bubbles */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(133,183,235,0.35);
+      animation: floatBubble ease-in-out infinite;
+    }
+
+    @keyframes floatBubble {
+      0%, 100% { transform: translateY(0) scale(1);    opacity: 0.25; }
+      50%       { transform: translateY(-20px) scale(1.05); opacity: 0.5; }
+    }
+
+    /* plane flying across */
+    .plane-wrap {
+      position: absolute;
+      top: 22%;
+      left: -60px;
+      animation: flyAcross 9s linear infinite;
+    }
+
+    @keyframes flyAcross {
+      0%   { left: -60px;  opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { left: calc(100% + 60px); opacity: 0; }
+    }
+
+    .plane-trail {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .plane-emoji { font-size: 1.75rem; }
+
+    .trail-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(181,212,244,0.6);
+      margin-right: 5px;
+      animation: trailFade 1s ease-out infinite;
+    }
+
+    .trail-dot:nth-child(2) { animation-delay: 0.1s; width:4px; height:4px; }
+    .trail-dot:nth-child(3) { animation-delay: 0.2s; width:3px; height:3px; }
+    .trail-dot:nth-child(4) { animation-delay: 0.3s; width:2px; height:2px; }
+
+    @keyframes trailFade {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 0.2; }
+    }
+
+    .hero-icon {
+      font-size: 3.75rem;
+      display: block;
+      margin-bottom: 1.25rem;
+      animation: moonFloat 4s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes moonFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.45;
+    }
+
+    .hero-sub {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      color: var(--b100);
+      line-height: 2;
+    }
+
+    /* wave */
+    .wave {
+      display: block;
+      width: 100%;
+      height: 64px;
+      background: #fff;
+      clip-path: ellipse(55% 100% at 50% 100%);
+      margin-top: -2px;
+    }
+
+    /* ── Sections ── */
+    .section {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 2.75rem 1.5rem;
+    }
+
+    .section + .section { border-top: 0.5px solid var(--b100); }
+
+    .section-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--b400);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--b100);
+    }
+
+    /* ── Message card ── */
+    .msg-card {
+      background: var(--b50);
+      border: 0.5px solid var(--b100);
+      border-radius: 20px;
+      padding: 2rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .msg-card::before {
+      content: '\201C';
+      position: absolute;
+      top: -0.75rem; left: 1.25rem;
+      font-size: 6rem;
+      color: var(--b200);
+      opacity: 0.5;
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    .msg-card p {
+      font-size: 1.05rem;
+      color: var(--b800);
+      line-height: 2;
+      position: relative;
+    }
+
+    .msg-card p + p { margin-top: 1rem; }
+
+    .msg-sig {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--b400);
+      font-style: italic;
+    }
+
+    /* ── Distance banner ── */
+    .distance-banner {
+      background: var(--b800);
+      border-radius: 20px;
+      padding: 2rem 2.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .distance-icon {
+      font-size: 3rem;
+      flex-shrink: 0;
+      animation: heartbeat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.2); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.1); }
+    }
+
+    .distance-text h3 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .distance-text p {
+      font-size: 0.9375rem;
+      color: var(--b100);
+      line-height: 1.8;
+    }
+
+    /* ── Memories ── */
+    .memories-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+    .memory-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1.1rem 1.25rem;
+      border-radius: 14px;
+      transition: background 0.2s;
+    }
+
+    .memory-item:hover { background: var(--b50); }
+
+    .memory-emoji {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+      animation: heartbeat 2.5s ease-in-out infinite;
+    }
+
+    .memory-item:nth-child(2) .memory-emoji { animation-delay: 0.4s; }
+    .memory-item:nth-child(3) .memory-emoji { animation-delay: 0.8s; }
+    .memory-item:nth-child(4) .memory-emoji { animation-delay: 1.2s; }
+
+    .memory-text {
+      font-size: 1rem;
+      color: var(--b800);
+      line-height: 1.75;
+    }
+
+    /* ── Promise card ── */
+    .promise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+
+    .promise-card {
+      background: var(--b50);
+      border: 0.5px solid var(--b100);
+      border-radius: 18px;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), border-color 0.2s;
+      cursor: default;
+    }
+
+    .promise-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      border-color: var(--b200);
+    }
+
+    .promise-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--b100);
+      border: 2px solid var(--b200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      position: relative;
+    }
+
+    .promise-icon::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1.5px dashed var(--b200);
+      animation: spinDash 8s linear infinite;
+    }
+
+    @keyframes spinDash {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .promise-label {
+      font-size: 0.875rem;
+      color: var(--b600);
+      line-height: 1.5;
+    }
+
+    /* ── Closing quote ── */
+    .closing-card {
+      background: var(--b900);
+      border-radius: 20px;
+      padding: 2.25rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .closing-card::before {
+      content: '✦';
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      font-size: 1rem;
+      color: var(--b200);
+      opacity: 0.4;
+      animation: spinStar 6s linear infinite;
+    }
+
+    .closing-card::after {
+      content: '✦';
+      position: absolute;
+      bottom: 1rem; left: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--b200);
+      opacity: 0.3;
+      animation: spinStar 4s linear infinite reverse;
+    }
+
+    @keyframes spinStar {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .closing-card p {
+      font-size: 1.1rem;
+      color: var(--b50);
+      line-height: 2;
+    }
+
+    .closing-card cite {
+      display: block;
+      margin-top: 0.875rem;
+      font-size: 0.875rem;
+      color: var(--b200);
+      font-style: normal;
+    }
+
+    /* floating hearts */
+    .float-hearts {
+      text-align: center;
+      padding: 1.75rem 0 0;
+      font-size: 1.25rem;
+      letter-spacing: 8px;
+    }
+
+    .float-hearts span { display: inline-block; animation: floatHeart 2s ease-in-out infinite; }
+    .float-hearts span:nth-child(2) { animation-delay: 0.25s; }
+    .float-hearts span:nth-child(3) { animation-delay: 0.5s; }
+    .float-hearts span:nth-child(4) { animation-delay: 0.75s; }
+    .float-hearts span:nth-child(5) { animation-delay: 1s; }
+
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-9px); }
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--b900);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    footer p { font-size: 0.9rem; color: var(--b200); line-height: 2; }
+
+    .footer-dots {
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .fdot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--b600);
+      animation: dotPulse 1.8s ease-in-out infinite;
+    }
+
+    .fdot:nth-child(2) { animation-delay: 0.3s; }
+    .fdot:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50%       { transform: scale(1.5); opacity: 1; }
+    }
+
+    /* scroll reveal */
+    @supports (animation-timeline: scroll()) {
+      .msg-card, .distance-banner, .memory-item, .promise-card, .closing-card {
+        animation: fadeUp linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 25%;
+      }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.875rem; }
+      .promise-grid { grid-template-columns: repeat(2, 1fr); }
+      .distance-banner { flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <!-- stars -->
+    <div class="star" style="width:3px;height:3px;top:10%;left:6%;animation-duration:2.1s;animation-delay:0s"></div>
+    <div class="star" style="width:2px;height:2px;top:22%;left:16%;animation-duration:3.3s;animation-delay:0.5s"></div>
+    <div class="star" style="width:4px;height:4px;top:7%;left:30%;animation-duration:1.9s;animation-delay:0.9s"></div>
+    <div class="star" style="width:2px;height:2px;top:42%;left:44%;animation-duration:2.8s;animation-delay:0.2s"></div>
+    <div class="star" style="width:3px;height:3px;top:14%;left:57%;animation-duration:3.5s;animation-delay:0.7s"></div>
+    <div class="star" style="width:2px;height:2px;top:50%;left:69%;animation-duration:2.2s;animation-delay:1.1s"></div>
+    <div class="star" style="width:4px;height:4px;top:9%;left:79%;animation-duration:2.7s;animation-delay:0.3s"></div>
+    <div class="star" style="width:2px;height:2px;top:30%;left:89%;animation-duration:1.7s;animation-delay:0.8s"></div>
+    <div class="star" style="width:3px;height:3px;top:62%;left:4%;animation-duration:3.1s;animation-delay:0.4s"></div>
+    <div class="star" style="width:2px;height:2px;top:68%;left:87%;animation-duration:2.4s;animation-delay:1.4s"></div>
+    <div class="star" style="width:3px;height:3px;top:78%;left:48%;animation-duration:2s;animation-delay:0.6s"></div>
+    <div class="star" style="width:2px;height:2px;top:18%;left:73%;animation-duration:3.7s;animation-delay:0.1s"></div>
+    <div class="star" style="width:3px;height:3px;top:38%;left:25%;animation-duration:2.6s;animation-delay:1.2s"></div>
+    <div class="star" style="width:2px;height:2px;top:55%;left:35%;animation-duration:3s;animation-delay:0.9s"></div>
+    <div class="star" style="width:4px;height:4px;top:75%;left:20%;animation-duration:1.8s;animation-delay:0.3s"></div>
+
+    <!-- bubbles -->
+    <div class="bubble" style="width:65px;height:65px;top:18%;left:4%;animation-duration:5.5s;animation-delay:0s"></div>
+    <div class="bubble" style="width:38px;height:38px;top:58%;left:10%;animation-duration:7s;animation-delay:1.2s"></div>
+    <div class="bubble" style="width:55px;height:55px;top:12%;right:6%;animation-duration:6.2s;animation-delay:0.4s"></div>
+    <div class="bubble" style="width:28px;height:28px;top:65%;right:12%;animation-duration:4.8s;animation-delay:2s"></div>
+    <div class="bubble" style="width:45px;height:45px;top:40%;right:3%;animation-duration:8s;animation-delay:0.8s"></div>
+
+    <!-- airplane -->
+    <div class="plane-wrap" aria-hidden="true">
+      <div class="plane-trail">
+        <div class="trail-dot"></div>
+        <div class="trail-dot"></div>
+        <div class="trail-dot"></div>
+        <div class="trail-dot"></div>
+        <span class="plane-emoji">✈️</span>
+      </div>
+    </div>
+
+    <span class="hero-icon" role="img" aria-label="พระจันทร์">🌙</span>
+    <h1 class="hero-title">คิดถึงทุกคนนะ</h1>
+    <p class="hero-sub">
+      ถึงจะมาเรียนไกลแค่ไหน<br>
+      แต่ใจก็ยังอยู่กับทุกคนเสมอ
+    </p>
+  </div>
+
+  <div class="wave" aria-hidden="true"></div>
+
+  <!-- ── Message ── -->
+  <div class="section">
+    <p class="section-label">ข้อความถึงเพื่อนๆ</p>
+    <div class="msg-card">
+      <p>
+        ตั้งแต่มาเรียนที่นี่ มีหลายครั้งที่นึกถึงทุกคนขึ้นมาเฉยๆ
+        บางทีก็นึกถึงตอนที่เราอยู่ด้วยกัน เรื่องเล็กๆ น้อยๆ
+        ที่เคยทำให้หัวเราะกันได้ทุกวัน
+      </p>
+      <p>
+        ระยะทางมันไกลจริงๆ แต่ความคิดถึงไม่ได้ไกลเลย
+        อยากให้ทุกคนรู้ว่า — <strong style="color:var(--b600);">คิดถึงทุกคนนะ</strong> ทุกวันเลย
+      </p>
+      <p class="msg-sig">— ส่งใจมาจากที่ไกล 💙</p>
+    </div>
+  </div>
+
+  <!-- ── Distance ── -->
+  <div class="section" style="padding-top:0">
+    <p class="section-label">ไกลแค่ไหนก็ยังคิดถึง</p>
+    <div class="distance-banner">
+      <span class="distance-icon" role="img" aria-label="หัวใจ">💙</span>
+      <div class="distance-text">
+        <h3>ระยะทางไม่ใช่ปัญหา</h3>
+        <p>
+          ถึงแม้จะมาเรียนไกลบ้าน แต่ทุกครั้งที่เห็นอะไรสวยๆ
+          ก็จะนึกถึงเพื่อนๆ ทุกคนขึ้นมาทันที
+          อยากให้ทุกคนดูแลตัวเองด้วยนะ
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Memories ── -->
+  <div class="section" style="padding-top:0">
+    <p class="section-label">ความทรงจำที่ยังจำได้</p>
+    <ul class="memories-list">
+      <li class="memory-item">
+        <span class="memory-emoji" aria-hidden="true">🌙</span>
+        <span class="memory-text">คืนที่นั่งคุยกันจนดึก ไม่รู้จะเลิกตอนไหน</span>
+      </li>
+      <li class="memory-item">
+        <span class="memory-emoji" aria-hidden="true">🍜</span>
+        <span class="memory-text">มื้อที่กินข้าวด้วยกัน แซวกันไปหัวเราะกันไป</span>
+      </li>
+      <li class="memory-item">
+        <span class="memory-emoji" aria-hidden="true">🎒</span>
+        <span class="memory-text">วันที่ไปเที่ยวด้วยกัน หลงทางก็ยังสนุกอยู่</span>
+      </li>
+      <li class="memory-item">
+        <span class="memory-emoji" aria-hidden="true">💪</span>
+        <span class="memory-text">ช่วงเวลาที่ยากๆ ที่ทุกคนยังอยู่เคียงข้างกัน</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── Promises ── -->
+  <div class="section" style="padding-top:0">
+    <p class="section-label">สัญญากับตัวเอง</p>
+    <div class="promise-grid">
+      <div class="promise-card">
+        <div class="promise-icon" role="img" aria-label="กลับบ้าน">🏡</div>
+        <span class="promise-label">กลับมาหาทุกคน<br>เร็วๆ นี้</span>
+      </div>
+      <div class="promise-card">
+        <div class="promise-icon" role="img" aria-label="โทรหา">📞</div>
+        <span class="promise-label">ทักทายกัน<br>อย่าหายหน้า</span>
+      </div>
+      <div class="promise-card">
+        <div class="promise-icon" role="img" aria-label="เที่ยวด้วยกัน">🗺️</div>
+        <span class="promise-label">ไปเที่ยวด้วยกัน<br>อีกรอบนะ</span>
+      </div>
+      <div class="promise-card">
+        <div class="promise-icon" role="img" aria-label="กินข้าวด้วยกัน">🍽️</div>
+        <span class="promise-label">กินข้าวด้วยกัน<br>เหมือนเดิม</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Closing ── -->
+  <div class="section" style="padding-top:0;padding-bottom:1rem">
+    <div class="closing-card">
+      <p>
+        มิตรภาพที่ดีไม่ได้วัดที่ระยะทาง<br>
+        แต่วัดที่ว่ายังนึกถึงกันอยู่ไหม<br>
+        <strong style="color:var(--b100);">และฉันก็ยังนึกถึงทุกคนเสมอ</strong>
+      </p>
+      <cite>— คิดถึงนะ ทุกคน 💙</cite>
+    </div>
+
+    <div class="float-hearts" aria-hidden="true">
+      <span>💙</span><span>💙</span><span>💙</span><span>💙</span><span>💙</span>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-dots" aria-hidden="true">
+      <div class="fdot"></div>
+      <div class="fdot"></div>
+      <div class="fdot"></div>
+    </div>
+    <p>ส่งด้วยความคิดถึงจากที่ไกล<br>ถึงเพื่อนๆ ทุกคนที่รักและคิดถึง 💙</p>
+  </footer>
+
+</body>
+</html>
